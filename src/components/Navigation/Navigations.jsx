@@ -50,12 +50,6 @@ function useNavigations() {
       case "DevUser":
         navigate('/dev/user');
         break;
-      case "DevDashboard":
-        navigate('/dev/dashboard');
-        break;
-      case "DevAI":
-        navigate('/dev/ai');
-        break;
       default:
         navigate('/not-found');
         break;

@@ -1,132 +1,211 @@
-// src/components/SideNavigation.jsx
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useState, useEffect, useRef} from 'react';
+import {useLocation} from "react-router-dom";
 import styles from '../../styles/Navigation.module.css';
-import useNavigations from '../Navigation/Navigations.jsx';
-import { logout } from '../ApiRoute/auth.jsx';
+import useNavigations from "../Navigation/Navigations.jsx";
+import {logout} from "../ApiRoute/auth.jsx"; // 로그아웃 함수 임포트
 
 const SideNavigation = () => {
-  /* ───── 권한 정보 ───── */
-  const role    = localStorage.getItem('is_admin'); // "1" | "2" | null
+  const [selectedIndex, setSelectedIndex] = useState({group: 'top', index: 0});
+  const [itemHeight, setItemHeight] = useState(60); // 기본 높이
+  const [itemMargin, setItemMargin] = useState(20); // 기본 간격
+  const [topStart, setTopStart] = useState(0); // 상단 아이템의 시작 위치
+  const [bottomStart, setBottomStart] = useState(0); // 하단 아이템의 시작 위치
+  const role    = localStorage.getItem('is_admin');
   const isAdmin = role === '1';
   const isDev   = role === '2';
 
-  /* ───── 메뉴 정의 ───── */
-  const TOP_ITEMS = [
-    { id: 0, label: '대시보드',     page: 'Home',        icon: '/images/home_img.png',  path: '/home' },
-    { id: 1, label: '열선 도로 추천', page: 'RoadsSearch', icon: '/images/road_img.png',  path: '/roads-search' },
-    { id: 2, label: '정보 게시판',   page: 'BoardMain',   icon: '/images/board_img.png', path: ['/board-main', '/board-create'] },
-    { id: 3, label: '파일 요청 승인', page: 'AdminPage',   icon: '/images/admin_img.png', path: '/admin-page',  isAdminItem: true },
-    { id: 6, label: '개발자 페이지', page: 'DevDashboard',icon: '/images/dev.png',        path: '/dev',         isDevItem: true },
-  ];
-  const BOTTOM_ITEMS = [
-    { id: 4, label: '마이페이지', page: 'Mypage', icon: '/images/login_img.png',    path: '/mypage' },
-    { id: 5, label: '로그아웃',   page: 'Login',  icon: '/images/sign-out_img.png', path: '/' },
-  ];
-
-  /* ───── 상태 ───── */
-  const [selectedIndex, setSelectedIndex] = useState({ group: 'top', index: 0 });
-  const [itemHeight,   setItemHeight]   = useState(60);
-  const [itemMargin,   setItemMargin]   = useState(20);
-  const [topStart,     setTopStart]     = useState(0);
-  const [bottomStart,  setBottomStart]  = useState(0);
-
-  /* ───── 훅 ───── */
-  const navigateTo         = useNavigations();
-  const location           = useLocation();
-  const topContainerRef    = useRef(null);
+  const topContainerRef = useRef(null);
   const bottomContainerRef = useRef(null);
+  const navigateTo = useNavigations();
+  const location = useLocation();
 
-  /* ───── 권한으로 top 메뉴 필터 ───── */
-  const visibleTopItems = useMemo(() => (
-      TOP_ITEMS.filter(i => {
-        if (i.isAdminItem) return isAdmin;
-        if (i.isDevItem)   return isDev;
-        return true;
-      })
-  ), [isAdmin, isDev]);
-
-  /* ───── 경로 매칭 util ───── */
-  const matchPath = (itemPath, current) => (
-      Array.isArray(itemPath)
-          ? itemPath.some(p => current.startsWith(p))
-          : current.startsWith(itemPath)
-  );
-
-  /* ───── URL 변동 → selector 동기화 ───── */
-  useEffect(() => {
-    const cur = location.pathname.replace(/\/$/, '');
-    const tIdx = visibleTopItems.findIndex(i => matchPath(i.path, cur));
-    const bIdx = BOTTOM_ITEMS.findIndex(i => matchPath(i.path, cur));
-
-    if (tIdx !== -1)      setSelectedIndex({ group: 'top',    index: tIdx });
-    else if (bIdx !== -1) setSelectedIndex({ group: 'bottom', index: bIdx });
-  }, [location.pathname, visibleTopItems]);
-
-  /* ───── CSS 변수→레이아웃 동기화 ───── */
-  const syncLayout = () => {
-    const css = getComputedStyle(document.documentElement);
-    setItemHeight(+css.getPropertyValue('--item-height') || 60);
-    setItemMargin(+css.getPropertyValue('--item-margin') || 20);
-    if (topContainerRef.current)    setTopStart(topContainerRef.current.offsetTop);
-    if (bottomContainerRef.current) setBottomStart(bottomContainerRef.current.offsetTop);
+  const handleNavigation = (page) => {
+    navigateTo(page); // 페이지 이동 실행
   };
-  useEffect(() => {
-    syncLayout();
-    window.addEventListener('resize', syncLayout);
-    return () => window.removeEventListener('resize', syncLayout);
-  }, []);
 
-  /* ───── 네비게이션 & 로그아웃 ───── */
-  const handleClick = (group, idx, item) => {
-    setSelectedIndex({ group, index: idx });
-    if (item.label === '로그아웃') return handleLogout();
-    navigateTo(item.page);
-  };
-  const handleLogout = async () => {
-    try {
-      await logout(localStorage.getItem('access_token'));
-    } finally {
-      ['access_token', 'refresh_token', 'is_admin'].forEach(localStorage.removeItem);
-      navigateTo('Login');
+  // 메뉴 항목
+  const topItems = [
+    {
+      id: 0,
+      label: '대시보드',
+      page: 'Home',
+      icon: '/images/home_img.png',
+      path: '/home'
+    },
+    {
+      id: 1,
+      label: '열선 도로 추천',
+      page: 'RoadsSearch',
+      icon: '/images/road_img.png',
+      path: '/roads-search'
+    },
+    {
+      id: 2,
+      label: '정보 게시판',
+      page: 'BoardMain',
+      icon: '/images/board_img.png',
+      path: ['/board-main', '/board-create']
+    },
+    {
+      id: 3,
+      label: '파일 요청 승인',
+      page: 'AdminPage',
+      icon: '/images/admin_img.png',
+      onlyOn: '/admin-page',
+      path: '/admin-page',
+      isAdminItem: true, // 관리자 전용 메뉴
+    },
+    {
+      id: 6,
+      label: '개발자 페이지',
+      page: 'DevUser',
+      icon: '/images/dev.png',
+      path: '/dev/user',
+      isDevItem: true,     // 개발자 전용
+    },
+  ];
+
+  const bottomItems = [
+    {
+      id: 4,
+      label: '마이페이지',
+      page: 'Mypage',
+      icon: '/images/login_img.png',
+      path: '/mypage'
+    },
+    {
+      id: 5,
+      label: '로그아웃',
+      page: 'Login',
+      icon: '/images/sign-out_img.png',
+      path: '/'
+    },
+  ];
+
+  // 경로에서 끝의 슬래시 제거
+  const currentPath = location.pathname.replace(/\/$/, '');
+
+  // 어드민 메뉴 필터링
+  const renderTopItems = topItems.filter((item) => {
+      // 관리자인 경우, 어드민 전용 항목은 항상 보여줍니다.
+      if (item.isAdminItem) {
+        return isAdmin;
+      }
+    if (item.isDevItem) {
+      return isDev;
+    }
+      // 일반 항목 중 onlyOn 조건이 있는 경우 현재 경로와 비교
+      if (item.onlyOn) {
+        return currentPath === item.onlyOn.replace(/\/$/, '');
+      }
+      return true;
+    });
+
+  const updateLayout = () => {
+    const rootStyle = getComputedStyle(document.documentElement);
+
+    // CSS 변수 값 가져오기
+    setItemHeight(parseInt(rootStyle.getPropertyValue('--item-height')) || 60);
+    setItemMargin(parseInt(rootStyle.getPropertyValue('--item-margin')) || 20);
+
+    // topNavContainer와 bottomNavContainer의 위치 업데이트
+    if (topContainerRef.current) {
+      setTopStart(topContainerRef.current.offsetTop);
+    }
+    if (bottomContainerRef.current) {
+      setBottomStart(bottomContainerRef.current.offsetTop);
     }
   };
 
-  /* ───── selector 위치 계산 ───── */
-  const selectorTop =
-      (selectedIndex.group === 'top' ? topStart : bottomStart) +
-      selectedIndex.index * (itemHeight + itemMargin);
+  useEffect(() => {
+    // 경로 변경 시 활성화된 아이템 설정
+    const path = location.pathname;
+    const topIndex = topItems.findIndex(item => item.path === path);
+    const bottomIndex = bottomItems.findIndex(item => item.path === path);
+    console.log("isAdmin 상태:", isAdmin);
+    if (topIndex !== -1) {
+      setSelectedIndex({group: 'top', index: topIndex});
+    } else if (bottomIndex !== -1) {
+      setSelectedIndex({group: 'bottom', index: bottomIndex});
+    }
+  }, [location.pathname]);
 
-  /* ───── 렌더 ───── */
+  useEffect(() => {
+    updateLayout(); // 초기 레이아웃 설정
+    window.addEventListener('resize', updateLayout); // 화면 크기 변경에 대응
+
+    return () => {
+      window.removeEventListener('resize', updateLayout); // 이벤트 리스너 정리
+    };
+  }, []);
+
+  // 로그아웃 처리 함수
+  const handleLogout = async () => {
+    try {
+      await logout(localStorage.getItem("access_token")); // 로그아웃 API 호출
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('is_admin');
+      setIsAdmin(false); // 어드민 상태 변경
+      navigateTo('Login'); // 로그인 페이지로 이동
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+    }
+  };
+
+  const calculateTop = () => {
+    const totalItemHeight = itemHeight + itemMargin;
+
+    if (selectedIndex.group === 'top') {
+      return topStart + selectedIndex.index * totalItemHeight;
+    } else {
+      return bottomStart + selectedIndex.index * totalItemHeight;
+    }
+  };
+
   return (
       <div className={styles.leftNavi}>
-        {/* selector bar */}
-        <div className={styles.selector1Icon} style={{ top: selectorTop }} />
-        <div className={styles.selector2}     style={{ top: selectorTop }} />
+        {/* 선택된 아이템 표시 */}
+        <div className={styles.selector1Icon}
+             style={{top: `${calculateTop()}px`}}/>
+        <div className={styles.selector2} style={{top: `${calculateTop()}px`}}/>
 
-        {/* top menu */}
+        {/* 상단 아이템 */}
         <div className={styles.menuItems} ref={topContainerRef}>
-          {visibleTopItems.map((item, idx) => (
+          {renderTopItems.map((item, index) => (
               <div
                   key={item.id}
-                  className={`${styles.navItem}${selectedIndex.group==='top'&&selectedIndex.index===idx ? ` ${styles.active}` : ''}`}
-                  onClick={() => handleClick('top', idx, item)}
+                  className={`${styles.navItem} ${selectedIndex.group === 'top'
+                  && selectedIndex.index === index ? styles.active : ''}`}
+                  onClick={() => {
+                    setSelectedIndex({group: 'top', index});
+                    handleNavigation(item.page);
+                  }}
               >
-                <img src={item.icon} alt={item.label} />
+                <img src={item.icon} alt={item.label}/>
                 <b>{item.label}</b>
               </div>
           ))}
         </div>
 
-        {/* bottom menu */}
+        {/* 하단 아이템 */}
         <div className={styles.bottomNavContainer} ref={bottomContainerRef}>
-          {BOTTOM_ITEMS.map((item, idx) => (
+          {bottomItems.map((item, index) => (
               <div
                   key={item.id}
-                  className={`${styles.navItem}${selectedIndex.group==='bottom'&&selectedIndex.index===idx ? ` ${styles.active}` : ''}`}
-                  onClick={() => handleClick('bottom', idx, item)}
+                  className={`${styles.navItem} ${selectedIndex.group
+                  === 'bottom' && selectedIndex.index === index ? styles.active
+                      : ''}`}
+                  onClick={() => {
+                    setSelectedIndex({group: 'bottom', index});
+                    if (item.label === '로그아웃') {
+                      handleLogout(); // 로그아웃 처리
+                    } else {
+                      handleNavigation(item.page);
+                    }
+                  }}
               >
-                <img src={item.icon} alt={item.label} />
+                <img src={item.icon} alt={item.label}/>
                 <b>{item.label}</b>
               </div>
           ))}
