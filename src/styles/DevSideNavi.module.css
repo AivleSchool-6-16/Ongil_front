@@ -1,0 +1,136 @@
+.leftNavi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(
+            180deg,
+            rgba(66, 83, 96, 0.8),
+            rgba(114, 116, 118, 0.8)
+    );
+    width: 310px;
+    height: 1080px;
+}
+.logoImgIcon {
+    position: absolute;
+    top: 0;
+    left: 49px;
+    width: 47.3px;
+    height: 47.3px;
+    object-fit: contain;
+}
+.logoTxt {
+    position: absolute;
+    top: 15.8px;
+    left: 0;
+    display: inline-block;
+    width: 86px;
+    height: 51.6px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+}
+.logogroup {
+    position: absolute;
+    top: 0;
+    left: 18px;
+    width: 96.3px;
+    height: 67.4px;
+    font-size: var(--font-size-29xl);
+    font-family: var(--font-stylish);
+}
+.loginImgIcon {
+    position: absolute;
+    top: 355px;
+    left: 24px;
+    width: 42px;
+    height: 45px;
+    object-fit: cover;
+}
+.model,
+.network,
+.user {
+    position: absolute;
+    left: 91px;
+}
+.user {
+    top: 368px;
+    display: inline-block;
+    width: 116px;
+    height: 30px;
+}
+.model,
+.network {
+    top: 216px;
+}
+.network {
+    top: 291px;
+}
+.deepLearningIcon,
+.globalIcon {
+    position: absolute;
+    top: 205px;
+    left: 24px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+}
+.globalIcon {
+    top: 280px;
+    left: 23px;
+}
+.selector1Icon,
+.selector2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 309px;
+    height: 65.3px;
+}
+.selector2 {
+    top: 0.4px;
+    left: 298px;
+    background-color: var(--color-gainsboro-200);
+    width: 10px;
+}
+.dashboardIcon,
+.pageSelector {
+    position: absolute;
+    top: 348px;
+    left: 1px;
+    width: 309px;
+    height: 65.7px;
+}
+.dashboardIcon {
+    top: 132px;
+    left: 24px;
+    width: 47px;
+    height: 47px;
+    object-fit: cover;
+}
+.backArrowIcon,
+.dashboards {
+    position: absolute;
+    top: 144px;
+    left: 91px;
+}
+.backArrowIcon {
+    top: 1011px;
+    left: 31px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+}
+.b,
+.devSidenav {
+    position: absolute;
+    top: 1022px;
+    left: 86px;
+}
+.devSidenav {
+    top: 0;
+    left: 0;
+    width: 310px;
+    height: 1080px;
+    text-align: left;
+    font-size: var(--font-size-xl);
+    color: var(--color-white);
+    font-family: var(--font-inter);
+}

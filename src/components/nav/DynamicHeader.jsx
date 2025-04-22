@@ -6,13 +6,10 @@ import styles from '../../styles/DynamicHeader.module.css';
 const DynamicHeader = () => {
   const location = useLocation();
   const [sideNavWidth, setSideNavWidth] = useState(290); // 기본 사이드 네비게이션 너비
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  // 컴포넌트 마운트 시 localStorage에서 관리자 여부 확인
-  useEffect(() => {
-    const adminFlag = localStorage.getItem('is_admin') === 'true';
-    setIsAdmin(adminFlag);
-  }, []);
+  const role    = localStorage.getItem('is_admin');
+  const isAdmin = role === '1';
+  const isDev   = role === '2';
 
   // 경로에 따른 기본 헤더 데이터
   const headerData = [
@@ -42,30 +39,37 @@ const DynamicHeader = () => {
       icon: '/images/admin_icon.png',
       text: '[관리자] 각 동별 파일 요청 현황'
     },
+    {
+      paths: ['/dev'],
+      icon: '/images/dev.png',
+    },
   ];
 
-  // 현재 경로에 맞는 기본 헤더 선택
-  let currentHeader = headerData.find((entry) =>
-      entry.paths.some((path) => location.pathname.startsWith(path))
+  // 현재 경로에 맞는 헤더 항목 선택
+  let currentHeader = headerData.find(entry =>
+      entry.paths.some(path => location.pathname.startsWith(path))
   );
 
-  // 관리자 토큰이 있다면, 현재 헤더 텍스트 앞에 [관리자] 접두어를 추가하여 항상 관리자임을 표시
-  if (isAdmin) {
-    if (currentHeader) {
-      // 이미 관리자 관련 텍스트가 없으면 접두어 추가
-      if (!currentHeader.text.includes('[관리자]')) {
-        currentHeader = {
-          ...currentHeader,
-          text: `[관리자] ${currentHeader.text}`,
-        };
-      }
-    } else {
-      // currentHeader가 없을 경우 기본 관리자 헤더 설정
-      currentHeader = {
-        icon: '/images/admin_icon.png',
-        text: '[관리자] 대시보드',
-      };
+  // 역할이 관리자면 텍스트 앞에 [관리자] 붙이기
+  if (isAdmin && currentHeader) {
+    if (!currentHeader.text.startsWith('[관리자]')) {
+      currentHeader = { ...currentHeader, text: `[관리자] ${currentHeader.text}` };
     }
+  }
+
+  // // 역할이 개발자면 텍스트 앞에 [개발자] 붙이기
+  // if (isDev && currentHeader) {
+  //   if (!currentHeader.text.startsWith('[개발자]')) {
+  //     currentHeader = { ...currentHeader, text: `[개발자] ${currentHeader.text}` };
+  //   }
+  // }
+
+  // fallback
+  if (!currentHeader) {
+    currentHeader = {
+      icon: '/images/default_icon.png',
+      text: '페이지를 찾을 수 없습니다',
+    };
   }
 
   // fallback: currentHeader가 없을 경우

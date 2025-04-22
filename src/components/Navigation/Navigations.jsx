@@ -47,6 +47,9 @@ function useNavigations() {
       case "RoadsSearch":
         navigate('/roads-search');
         break;
+      case "DevUser":
+        navigate('/dev/user');
+        break;
       default:
         navigate('/not-found');
         break;

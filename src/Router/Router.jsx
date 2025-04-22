@@ -15,6 +15,8 @@ import Layout from "../components/nav/Layout.jsx"; // Layout 컴포넌트
 import NotFound from "../screens/NotFound.jsx";
 import ProtectedRoute from "../routes/ProtectedRoute.jsx";
 import AdminRoute from "../routes/AdminRoute.jsx";
+import DevUser from "../screens/DevUser.jsx";
+import DevRoute from "../routes/DevRoute.jsx"
 
 /*import BoardId from "../screens/BoardId.jsx"; // 동적 경로에 대한 컴포넌트*/
 
@@ -128,8 +130,10 @@ function Router() {
                  element={<ProtectedRoute><BoardCreate /></ProtectedRoute>}/>
           <Route path="/mypage"
                  element={<ProtectedRoute><Mypage/></ProtectedRoute>}/>
-        </Route>
 
+        </Route>
+        <Route path="/dev/user"
+               element={<DevRoute><DevUser/></DevRoute>}/>
         {/* 레이아웃이 필요 없는 경로들 */}
         <Route path="/" element={<Login/>}/>
         <Route path="/find-pwd" element={<Findpwd/>}/>

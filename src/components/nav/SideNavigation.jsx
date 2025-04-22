@@ -10,8 +10,9 @@ const SideNavigation = () => {
   const [itemMargin, setItemMargin] = useState(20); // 기본 간격
   const [topStart, setTopStart] = useState(0); // 상단 아이템의 시작 위치
   const [bottomStart, setBottomStart] = useState(0); // 하단 아이템의 시작 위치
-  const [isAdmin, setIsAdmin] = useState(
-      localStorage.getItem('is_admin') === '1'); // 어드민 여부 상태
+  const role    = localStorage.getItem('is_admin');
+  const isAdmin = role === '1';
+  const isDev   = role === '2';
 
   const topContainerRef = useRef(null);
   const bottomContainerRef = useRef(null);
@@ -54,6 +55,14 @@ const SideNavigation = () => {
       path: '/admin-page',
       isAdminItem: true, // 관리자 전용 메뉴
     },
+    {
+      id: 6,
+      label: '개발자 페이지',
+      page: 'DevUser',
+      icon: '/images/dev.png',
+      path: '/dev/user',
+      isDevItem: true,     // 개발자 전용
+    },
   ];
 
   const bottomItems = [
@@ -82,6 +91,9 @@ const SideNavigation = () => {
       if (item.isAdminItem) {
         return isAdmin;
       }
+    if (item.isDevItem) {
+      return isDev;
+    }
       // 일반 항목 중 onlyOn 조건이 있는 경우 현재 경로와 비교
       if (item.onlyOn) {
         return currentPath === item.onlyOn.replace(/\/$/, '');
