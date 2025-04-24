@@ -1,4 +1,4 @@
-// src/components/DynamicHeader.jsx
+// src/components/DevDynamicHeader.jsx
 import {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import styles from '../../styles/DynamicHeader.module.css';
@@ -89,7 +89,7 @@ const DynamicHeader = () => {
         const rootStyle = getComputedStyle(document.documentElement);
         const sideWidth = parseInt(
             rootStyle.getPropertyValue('--side-nav-width')
-        ) || 290;
+        ) || 230;
         setSideNavWidth(sideWidth);
       }, 150);
     };
