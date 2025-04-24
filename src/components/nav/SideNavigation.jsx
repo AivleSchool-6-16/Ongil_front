@@ -58,9 +58,9 @@ const SideNavigation = () => {
     {
       id: 6,
       label: '개발자 페이지',
-      page: 'DevUser',
+      page: 'DevDashboard',
       icon: '/images/dev.png',
-      path: '/dev/user',
+      path: '/dev/dashboard',
       isDevItem: true,     // 개발자 전용
     },
   ];

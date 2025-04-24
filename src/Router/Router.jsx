@@ -17,6 +17,9 @@ import ProtectedRoute from "../routes/ProtectedRoute.jsx";
 import AdminRoute from "../routes/AdminRoute.jsx";
 import DevUser from "../screens/DevUser.jsx";
 import DevRoute from "../routes/DevRoute.jsx"
+import DevAI from "../screens/DevAI.jsx";
+import DevDashboard from "../screens/DevDashboard.jsx";
+import DevLayout from "../components/nav/dev/DevLayout.jsx";
 
 /*import BoardId from "../screens/BoardId.jsx"; // 동적 경로에 대한 컴포넌트*/
 
@@ -132,8 +135,14 @@ function Router() {
                  element={<ProtectedRoute><Mypage/></ProtectedRoute>}/>
 
         </Route>
-        <Route path="/dev/user"
-               element={<DevRoute><DevUser/></DevRoute>}/>
+        <Route element={<DevLayout/>}>
+          <Route path="/dev/user"
+                 element={<DevRoute><DevUser/></DevRoute>}/>
+          <Route path="/dev/dashboard"
+                 element={<DevRoute><DevDashboard/></DevRoute>}/>
+          <Route path="/dev/ai"
+                 element={<DevRoute><DevAI/></DevRoute>}/>
+        </Route>
         {/* 레이아웃이 필요 없는 경로들 */}
         <Route path="/" element={<Login/>}/>
         <Route path="/find-pwd" element={<Findpwd/>}/>

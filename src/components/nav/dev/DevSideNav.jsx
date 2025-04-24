@@ -17,11 +17,11 @@ const DevSideNav = () => {
 
     /* ───────── 메뉴 정의 ───────── */
     const menuItems = [
-        { id: 0, label: 'Dashboards', page: 'DevDashboard', icon: '/images/dashboard.png', path: '/dev/dashboards'  },
-        { id: 1, label: 'User',       page: 'DevUser',      icon: '/images/login_img.png', path: '/dev/user'       },
-        { id: 2, label: 'Model',      page: 'DevAI',     icon: '/images/deep_learning.png', path: '/dev/ai'   },
+        { id: 0, label: 'Dashboards', page: 'DevDashboard', icon: '/images/dashboard.png'       },
+        { id: 1, label: 'User',       page: 'DevUser',      icon: '/images/login_img.png'       },
+        { id: 2, label: 'Model',      page: 'DevAI',     icon: '/images/deep_learning.png'   },
         { id: 3, label: 'Network',    page: 'DevNetwork',   icon: '/images/global.png'          },
-        { id: 4, label: 'Back to Home',page: 'Home',          icon: '/images/back_arrow.png', isBack: true },
+        { id: 4, label: 'Back to App',page: '/home',          icon: '/images/back_arrow.png', isBack: true },
     ];
 
     /* ───────── 레이아웃 계산 ───────── */
@@ -36,13 +36,6 @@ const DevSideNav = () => {
         window.addEventListener('resize', syncLayout);
         return () => window.removeEventListener('resize', syncLayout);
     }, []);
-    useEffect(() => {
-        const idx = menuItems.findIndex(m =>
-            location.pathname.startsWith(m.path)      // ← 서브 경로가 있어도 매칭
-        );
-        if (idx !== -1) setSelectedIndex({ group: 'main', index: idx });
-    }, [location.pathname]);
-
 
     /* ───────── URL 변화 시 active 동기화 ───────── */
     useEffect(() => {
