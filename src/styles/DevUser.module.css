@@ -26,16 +26,36 @@
     color: var(--color-steel);
 }
 
-/* ───────── 상단 검색 바 ───────── */
+/* 검색 입력창 */
+.searchInput {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* 필터 셀렉트 */
+.filterSelect {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: white;
+}
+
+/* 검색 바 내 정렬 */
 .searchbar {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     padding: 0.75rem 1rem;
     background: #eeeeee;
     border-radius: var(--br-card);
+    flex-wrap: wrap;
 }
+
 
 .searchbarChild,
 .searchbarItem { display: none; }  /* Figma 잔여 요소 숨김 */
@@ -85,6 +105,47 @@
     padding: 0.75rem 0;
     border-top: 1px solid rgba(255,255,255,0.1);
 }
+/* ───────── 테이블 래퍼 ───────── */
+.tableWrapper {
+    overflow-x: auto;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+/* ───────── 테이블 자체 ───────── */
+.userTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* 스크롤 유도 */
+}
+
+.userTable th,
+.userTable td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;         /* 줄바꿈 X */
+    border-bottom: 1px solid #ddd;
+}
+
+/* 헤더 */
+.userTable thead {
+    background-color: #333;
+    color: white;
+}
+
+.userTable tbody tr:nth-child(even) {
+    background-color: #eaeaea;
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .userTable th,
+    .userTable td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
 
 /* ───────── 반응형 ───────── */
 @media (max-width: 1024px) {
