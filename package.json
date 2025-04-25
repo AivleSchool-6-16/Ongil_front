@@ -7,7 +7,8 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "npm install rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -26,7 +27,7 @@
     "react-spinners": "^0.15.0",
     "react-tooltip": "^5.28.0",
     "recharts": "^2.15.3",
-    "rollup": "4.38.0",
+    "rollup": "^4.40.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "vite-express": "^0.20.0",
@@ -50,8 +51,5 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.4",
     "vite": "^6.3.3"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.40.0"
   }
 }
