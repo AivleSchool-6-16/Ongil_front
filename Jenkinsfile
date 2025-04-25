@@ -21,7 +21,7 @@ pipeline {
         )]) {
           sh '''
             echo "✅ 프론트엔드 Docker 이미지 빌드"
-            docker build -t $DOCKER_IMAGE ./frontend
+            docker build -t $DOCKER_IMAGE .
 
             echo "🐳 Docker Hub 로그인 및 푸시"
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
