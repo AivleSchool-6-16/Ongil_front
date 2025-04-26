@@ -36,7 +36,7 @@ pipeline {
         sshagent(credentials: ['ec2-ssh-key-id']) {
           sh '''
             echo "🚀 EC2 프론트엔드 배포 시작"
-            ssh -o StrictHostKeyChecking=no ubuntu@3.35.24.187 '
+            ssh -o StrictHostKeyChecking=no ubuntu@3.39.173.81 '
               cd ~/Ongil_project &&
               docker compose pull frontend &&
               docker compose up -d frontend &&
