@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/DevAi.module.css";
+import styles from "../styles/DevAI.module.css";
 
 /* ───── 상단 통계 카드 데이터 ───── */
 const stats = [
