@@ -33,5 +33,5 @@ export default defineConfig({
   },
   // 기본 경로 설정 (필요에 따라 조정)
   // 예를 들어, 서브 디렉토리에 배포할 경우 base를 설정
-  // base: '/your-sub-directory/',
+  base: '/',
 });
