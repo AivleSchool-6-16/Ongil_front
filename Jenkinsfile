@@ -12,14 +12,12 @@ pipeline {
       }
     }
 
-    stage('Copy .env') {
+    stage('Inject .env for Frontend') {
       steps {
-        sshagent(credentials: ['ec2-ssh-key-id']) {
+        withCredentials([file(credentialsId: 'frontend-env', variable: 'FRONT_ENV')]) {
           sh '''
-            echo "📦 EC2 내부에서 .env 파일 복사"
-            ssh -o StrictHostKeyChecking=no ubuntu@3.39.173.81 '
-              cp /home/ubuntu/ongil-envs/.env.frontend /home/ubuntu/Ongil_project/frontend/.env
-            '
+            echo "📦 .env 파일 주입"
+            cp $FRONT_ENV .env
           '''
         }
       }
