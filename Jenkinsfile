@@ -14,8 +14,14 @@ pipeline {
 
     stage('Copy .env') {
       steps {
-        echo "📦 .env 복사 (서버 내 저장된 경로에서)"
-        sh 'cp /home/ubuntu/ongil-envs/.env.frontend .env'
+        sshagent(credentials: ['ec2-ssh-key-id']) {
+          sh '''
+            echo "📦 EC2 내부에서 .env 파일 복사"
+            ssh -o StrictHostKeyChecking=no ubuntu@3.39.173.81 '
+              cp /home/ubuntu/ongil-envs/.env.frontend /home/ubuntu/Ongil_project/frontend/.env
+            '
+          '''
+        }
       }
     }
 
