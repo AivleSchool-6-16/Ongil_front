@@ -7,6 +7,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
+
 RUN npm run build
 
 # 2단계: nginx로 정적 파일 서빙
