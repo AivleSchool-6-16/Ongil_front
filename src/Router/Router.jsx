@@ -38,7 +38,7 @@ function Router() {
     // 경로와 타이틀/메타 데이터를 매핑
     const metaData = {
       "/": {title: "Login", description: "Login to access your account"},
-      "/home": {title: "Welcome Page", description: "Welcome to our website!"},
+      "/home": {title: "Ongil Home", description: "Welcome to our website!"},
       "/admin-page": {
         title: "Admin Dashboard",
         description: "Access your admin dashboard",
@@ -83,6 +83,22 @@ function Router() {
       "/board-detail/:postId": {
         title: "Board Detail",
         description: "View details of the board post",
+      },
+      "/dev/dashboard": {
+        title: "Developer Dashboard",
+        description: "Error Monitoring or Business Developer Center",
+      },
+      "/dev/user": {
+        title: "User Monitoring",
+        description: "User R.U.D Center",
+      },
+      "/dev/ai": {
+        title: "AI Monitoring",
+        description: "AI Monitoring Center",
+      },
+      "/dev/network": {
+        title: "Network Monitoring",
+        description: "Network Monitoring Center",
       },
     };
 
@@ -130,7 +146,7 @@ function Router() {
           <Route path="/board-create"
                  element={<ProtectedRoute><BoardCreate/></ProtectedRoute>}/>
           <Route path="/board-create/:postId"
-                 element={<ProtectedRoute><BoardCreate /></ProtectedRoute>}/>
+                 element={<ProtectedRoute><BoardCreate/></ProtectedRoute>}/>
           <Route path="/mypage"
                  element={<ProtectedRoute><Mypage/></ProtectedRoute>}/>
 

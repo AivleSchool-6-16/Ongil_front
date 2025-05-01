@@ -13,7 +13,8 @@
   display: flex;
   flex-direction: column;
   padding: 20px 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 1000;
 }
 
@@ -106,6 +107,7 @@
   .navItem b {
     font-size: 15px;
   }
+
   .selector2 {
     left: 210px; /* 메뉴 너비에 맞춤 */
   }

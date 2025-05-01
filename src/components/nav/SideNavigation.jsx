@@ -1,47 +1,95 @@
 // src/components/SideNavigation.jsx
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useState, useEffect, useRef, useMemo} from 'react';
+import {useLocation} from 'react-router-dom';
 import styles from '../../styles/Navigation.module.css';
 import useNavigations from '../Navigation/Navigations.jsx';
-import { logout } from '../ApiRoute/auth.jsx';
+import {logout} from '../ApiRoute/auth.jsx';
 
 const SideNavigation = () => {
   /* ───── 권한 정보 ───── */
-  const role    = localStorage.getItem('is_admin'); // "1" | "2" | null
+  const role = localStorage.getItem('is_admin'); // "1" | "2" | null
   const isAdmin = role === '1';
-  const isDev   = role === '2';
+  const isDev = role === '2';
 
   /* ───── 메뉴 정의 ───── */
   const TOP_ITEMS = [
-    { id: 0, label: '대시보드',     page: 'Home',        icon: '/images/home_img.png',  path: '/home' },
-    { id: 1, label: '열선 도로 추천', page: 'RoadsSearch', icon: '/images/road_img.png',  path: '/roads-search' },
-    { id: 2, label: '정보 게시판',   page: 'BoardMain',   icon: '/images/board_img.png', path: ['/board-main', '/board-create'] },
-    { id: 3, label: '파일 요청 승인', page: 'AdminPage',   icon: '/images/admin_img.png', path: '/admin-page',  isAdminItem: true },
-    { id: 6, label: '개발자 페이지', page: 'DevDashboard',icon: '/images/dev.png',        path: '/dev',         isDevItem: true },
+    {
+      id: 0,
+      label: '대시보드',
+      page: 'Home',
+      icon: '/images/home_img.png',
+      path: '/home'
+    },
+    {
+      id: 1,
+      label: '열선 도로 추천',
+      page: 'RoadsSearch',
+      icon: '/images/road_img.png',
+      path: ['/roads-search', '/roads-recommend']
+    },
+    {
+      id: 2,
+      label: '정보 게시판',
+      page: 'BoardMain',
+      icon: '/images/board_img.png',
+      path: ['/board-main', '/board-create', '/board-detail']
+    },
+    {
+      id: 3,
+      label: '파일 요청 승인',
+      page: 'AdminPage',
+      icon: '/images/admin_img.png',
+      path: '/admin-page',
+      isAdminItem: true
+    },
+    {
+      id: 6,
+      label: '개발자 페이지',
+      page: 'DevDashboard',
+      icon: '/images/dev.png',
+      path: '/dev',
+      isDevItem: true
+    },
   ];
   const BOTTOM_ITEMS = [
-    { id: 4, label: '마이페이지', page: 'Mypage', icon: '/images/login_img.png',    path: '/mypage' },
-    { id: 5, label: '로그아웃',   page: 'Login',  icon: '/images/sign-out_img.png', path: '/' },
+    {
+      id: 4,
+      label: '마이페이지',
+      page: 'Mypage',
+      icon: '/images/login_img.png',
+      path: '/mypage'
+    },
+    {
+      id: 5,
+      label: '로그아웃',
+      page: 'Login',
+      icon: '/images/sign-out_img.png',
+      path: '/'
+    },
   ];
 
   /* ───── 상태 ───── */
-  const [selectedIndex, setSelectedIndex] = useState({ group: 'top', index: 0 });
-  const [itemHeight,   setItemHeight]   = useState(60);
-  const [itemMargin,   setItemMargin]   = useState(20);
-  const [topStart,     setTopStart]     = useState(0);
-  const [bottomStart,  setBottomStart]  = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState({group: 'top', index: 0});
+  const [itemHeight, setItemHeight] = useState(60);
+  const [itemMargin, setItemMargin] = useState(20);
+  const [topStart, setTopStart] = useState(0);
+  const [bottomStart, setBottomStart] = useState(0);
 
   /* ───── 훅 ───── */
-  const navigateTo         = useNavigations();
-  const location           = useLocation();
-  const topContainerRef    = useRef(null);
+  const navigateTo = useNavigations();
+  const location = useLocation();
+  const topContainerRef = useRef(null);
   const bottomContainerRef = useRef(null);
 
   /* ───── 권한으로 top 메뉴 필터 ───── */
   const visibleTopItems = useMemo(() => (
       TOP_ITEMS.filter(i => {
-        if (i.isAdminItem) return isAdmin;
-        if (i.isDevItem)   return isDev;
+        if (i.isAdminItem) {
+          return isAdmin;
+        }
+        if (i.isDevItem) {
+          return isDev;
+        }
         return true;
       })
   ), [isAdmin, isDev]);
@@ -59,8 +107,11 @@ const SideNavigation = () => {
     const tIdx = visibleTopItems.findIndex(i => matchPath(i.path, cur));
     const bIdx = BOTTOM_ITEMS.findIndex(i => matchPath(i.path, cur));
 
-    if (tIdx !== -1)      setSelectedIndex({ group: 'top',    index: tIdx });
-    else if (bIdx !== -1) setSelectedIndex({ group: 'bottom', index: bIdx });
+    if (tIdx !== -1) {
+      setSelectedIndex({group: 'top', index: tIdx});
+    } else if (bIdx !== -1) {
+      setSelectedIndex({group: 'bottom', index: bIdx});
+    }
   }, [location.pathname, visibleTopItems]);
 
   /* ───── CSS 변수→레이아웃 동기화 ───── */
@@ -68,8 +119,13 @@ const SideNavigation = () => {
     const css = getComputedStyle(document.documentElement);
     setItemHeight(+css.getPropertyValue('--item-height') || 60);
     setItemMargin(+css.getPropertyValue('--item-margin') || 20);
-    if (topContainerRef.current)    setTopStart(topContainerRef.current.offsetTop);
-    if (bottomContainerRef.current) setBottomStart(bottomContainerRef.current.offsetTop);
+    if (topContainerRef.current) {
+      setTopStart(topContainerRef.current.offsetTop);
+    }
+    if (bottomContainerRef.current) {
+      setBottomStart(
+          bottomContainerRef.current.offsetTop);
+    }
   };
   useEffect(() => {
     syncLayout();
@@ -79,16 +135,23 @@ const SideNavigation = () => {
 
   /* ───── 네비게이션 & 로그아웃 ───── */
   const handleClick = (group, idx, item) => {
-    setSelectedIndex({ group, index: idx });
-    if (item.label === '로그아웃') return handleLogout();
+    setSelectedIndex({group, index: idx});
+    if (item.label === '로그아웃') {
+      return handleLogout();
+    }
     navigateTo(item.page);
   };
   const handleLogout = async () => {
+    // 먼저 로컬에서 세션 제거
+    ['access_token', 'refresh_token', 'is_admin'].forEach(
+        localStorage.removeItem);
+    navigateTo('Login'); // 바로 로그인 화면 이동
+
+    // 이후 API 호출 (실패해도 사용자 입장에선 무관)
     try {
       await logout(localStorage.getItem('access_token'));
-    } finally {
-      ['access_token', 'refresh_token', 'is_admin'].forEach(localStorage.removeItem);
-      navigateTo('Login');
+    } catch (error) {
+      console.warn('서버 로그아웃 실패 (무시 가능):', error.message);
     }
   };
 
@@ -101,18 +164,19 @@ const SideNavigation = () => {
   return (
       <div className={styles.leftNavi}>
         {/* selector bar */}
-        <div className={styles.selector1Icon} style={{ top: selectorTop }} />
-        <div className={styles.selector2}     style={{ top: selectorTop }} />
+        <div className={styles.selector1Icon} style={{top: selectorTop}}/>
+        <div className={styles.selector2} style={{top: selectorTop}}/>
 
         {/* top menu */}
         <div className={styles.menuItems} ref={topContainerRef}>
           {visibleTopItems.map((item, idx) => (
               <div
                   key={item.id}
-                  className={`${styles.navItem}${selectedIndex.group==='top'&&selectedIndex.index===idx ? ` ${styles.active}` : ''}`}
+                  className={`${styles.navItem}${selectedIndex.group === 'top'
+                  && selectedIndex.index === idx ? ` ${styles.active}` : ''}`}
                   onClick={() => handleClick('top', idx, item)}
               >
-                <img src={item.icon} alt={item.label} />
+                <img src={item.icon} alt={item.label}/>
                 <b>{item.label}</b>
               </div>
           ))}
@@ -123,10 +187,12 @@ const SideNavigation = () => {
           {BOTTOM_ITEMS.map((item, idx) => (
               <div
                   key={item.id}
-                  className={`${styles.navItem}${selectedIndex.group==='bottom'&&selectedIndex.index===idx ? ` ${styles.active}` : ''}`}
+                  className={`${styles.navItem}${selectedIndex.group
+                  === 'bottom' && selectedIndex.index === idx
+                      ? ` ${styles.active}` : ''}`}
                   onClick={() => handleClick('bottom', idx, item)}
               >
-                <img src={item.icon} alt={item.label} />
+                <img src={item.icon} alt={item.label}/>
                 <b>{item.label}</b>
               </div>
           ))}

@@ -1,9 +1,13 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState, useEffect, useRef} from "react";
+import {useNavigate} from "react-router-dom";
 import styles from "../styles/Board.module.css";
 import useNavigations from "../components/Navigation/Navigations.jsx";
-import { getAllPosts, searchPosts, getSocket } from "../components/ApiRoute/board.jsx";
-import { loadUserInfo } from '../components/ApiRoute/mypage.jsx';
+import {
+  getAllPosts,
+  searchPosts,
+  getSocket
+} from "../components/ApiRoute/board.jsx";
+import {loadUserInfo} from '../components/ApiRoute/mypage.jsx';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -63,16 +67,18 @@ const Board = () => {
   useEffect(() => {
     fetchUserInfo();
     getAllPosts()
-        .then((data) => {
-          if (!data.posts) return;
-          const sorted = data.posts.sort(
-              (a, b) => new Date(b.post_time) - new Date(a.post_time)
-          );
-          setBoardItems(sorted);
-        })
-        .catch((err) => {
-          console.error("게시글 불러오기 에러:", err);
-        });
+    .then((data) => {
+      if (!data.posts) {
+        return;
+      }
+      const sorted = data.posts.sort(
+          (a, b) => new Date(b.post_time) - new Date(a.post_time)
+      );
+      setBoardItems(sorted);
+    })
+    .catch((err) => {
+      console.error("게시글 불러오기 에러:", err);
+    });
   }, []);
 
   // 소켓 연결 (새 게시글 업데이트만 처리)
@@ -95,7 +101,9 @@ const Board = () => {
 
   // 페이지 이동 함수
   const goToPage = (page) => {
-    if (page < 1 || page > totalPages) return;
+    if (page < 1 || page > totalPages) {
+      return;
+    }
     setCurrentPage(page);
   };
 
@@ -188,7 +196,7 @@ const Board = () => {
               <span>카테고리</span>
               <span>제목</span>
               <span>이메일</span>
-              <span>관할구혁-부서명</span>
+              <span>관할구역-부서명</span>
               <span>조회수</span>
               <span>게시일</span>
             </div>
@@ -198,9 +206,9 @@ const Board = () => {
                       key={item.post_id}
                       className={styles.boardListItem}
                       onClick={() =>
-                          navigateTo("BoardDetail", { postId: item.post_id })
+                          navigateTo("BoardDetail", {postId: item.post_id})
                       }
-                      style={{ cursor: "pointer" }}
+                      style={{cursor: "pointer"}}
                   >
                 <span className={styles.boardCategory}>
                   {item.board_id === 1 ? "공개" : "비공개"}
@@ -238,7 +246,7 @@ const Board = () => {
                 >
                   이전
                 </button>
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
                         key={index + 1}
                         onClick={() => goToPage(index + 1)}
