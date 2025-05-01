@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: `${window.__CONFIG__.env.VITE_SERVER_ROUTE}/auth`, // FastAPI 서버의 기본 URL
+  baseURL: `${import.meta.env.VITE_SERVER_ROUTE}/auth`, // FastAPI 서버의 기본 URL
   headers: {
     'Content-Type': 'application/json',
   },

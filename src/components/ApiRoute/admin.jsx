@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // axios 설정
 const api = axios.create({
-  baseURL: `${window.__CONFIG__.VITE_SERVER_ROUTE}/admin`, // 기본 URL
+  baseURL: `${import.meta.env.VITE_SERVER_ROUTE}/admin`, // 기본 URL
   headers: {
     'Content-Type': 'application/json',
   },

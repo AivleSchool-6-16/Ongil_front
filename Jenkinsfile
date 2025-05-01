@@ -12,6 +12,13 @@ pipeline {
       }
     }
 
+    stage('Copy .env') {
+      steps {
+        echo "📦 .env 복사 (서버 내 저장된 경로에서)"
+        sh 'cp /home/ubuntu/ongil-envs/.env.frontend .env'
+      }
+    }
+
     stage('Build & Push Docker Image') {
       steps {
         withCredentials([usernamePassword(
