@@ -1,141 +1,217 @@
 /* ───────── 전역 변수 ───────── */
 :root {
-    /* 고정 영역 크기 */
-    --sidebar-width: 250px;
-    --header-height: 130px;
+  /* 고정 영역 크기 */
+  --sidebar-width: 250px;
+  --header-height: 130px;
 
-    /* 스타일 변수 */
-    --br-card: 8px;
-    --bg-page: #f3f4f6;
-    --grad-blue: linear-gradient(90deg, #0bb2ff, #4f60ff);
-    --color-red: #d43a1b;
-    --grad-orange: linear-gradient(90deg, rgba(255, 145, 0, 0.9), #ff7b00);
-    --border-steel: #4682b4;
+  /* 스타일 변수 */
+  --br-card: 8px;
+  --bg-page: #f3f4f6;
+  --grad-blue: linear-gradient(90deg, #0bb2ff, #4f60ff);
+  --color-red: #d43a1b;
+  --grad-orange: linear-gradient(90deg, rgba(255, 145, 0, 0.9), #ff7b00);
+  --border-steel: #4682b4;
 }
 
 /* ───────── 기본 레이아웃 ───────── */
 .devAi {
-    /* 사이드바 + 헤더 공간 비움 */
-    margin-left: var(--sidebar-width);
-    margin-top : var(--header-height);
-    width      : calc(100% - var(--sidebar-width));
-    min-height : calc(100vh - var(--header-height));
+  /* 사이드바 + 헤더 공간 비움 */
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  width: calc(100% - var(--sidebar-width));
+  min-height: calc(100vh - var(--header-height));
 
-    background : var(--bg-page);
-    display    : flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    font-family: "Inter", sans-serif;
-    color: #374151;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  color: #374151;
 }
 
 /* ───────── 타이틀 ───────── */
 .pageTitle {
-    margin: 0;
-    font-size: 1.75rem;
-    font-weight: 700;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 /* ===== 통계 카드 ===== */
 .statWrapper {
-    display: grid;
-    /* ① 각 칸이 0 ~ 220 px 사이에서만 늘어나도록(max 220) */
-    grid-template-columns: repeat(auto-fill, minmax(0, 220px));
-    gap: 1.5rem;
+  display: grid;
+  /* ① 각 칸이 0 ~ 220 px 사이에서만 늘어나도록(max 220) */
+  grid-template-columns: repeat(auto-fill, minmax(0, 220px));
+  gap: 1.5rem;
 }
 
 .statCard {
-    position: relative;
-    height: 119px;
-    background: #fff;
-    border-radius: var(--br-card);
-    overflow: hidden;
-    padding: 1rem;
+  position: relative;
+  height: 119px;
+  background: #fff;
+  border-radius: var(--br-card);
+  overflow: hidden;
+  padding: 1rem;
 
-    /* ② 안전장치 – 카드 자체에도 최대폭 고정 */
-    max-width: 220px;
+  /* ② 안전장치 – 카드 자체에도 최대폭 고정 */
+  max-width: 220px;
 }
 
 
 .statBar {
-    position: absolute;
-    bottom: 0;
-    left: 8px;
-    width: calc(100% - 16px);
-    height: 31px;
-    border-radius: 4px;
-    z-index: 0;
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: 31px;
+  border-radius: 4px;
+  z-index: 0;
 }
-.orangeBar { background: var(--grad-orange); }
-.redBar    { background: var(--color-red); }
+
+.orangeBar {
+  background: var(--grad-orange);
+}
+
+.redBar {
+  background: var(--color-red);
+}
 
 .statIcon {
-    position: absolute;
-    top: 18px;
-    right: 12px;
-    width: 46px;
-    height: 46px;
-    object-fit: contain;
+  position: absolute;
+  top: 18px;
+  right: 12px;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
 }
 
 .statValue {
-    position: absolute;
-    top: 10px;
-    left: 19px;
-    font: 700 2.25rem/1 "Inter", sans-serif;
+  position: absolute;
+  top: 10px;
+  left: 19px;
+  font: 700 2.25rem/1 "Inter", sans-serif;
 }
+
 .statUnit {
-    position: absolute;
-    top: 60px;
-    left: 19px;
-    font-size: 0.875rem;
-    color: #606468;
+  position: absolute;
+  top: 60px;
+  left: 19px;
+  font-size: 0.875rem;
+  color: #606468;
 }
+
 .statTitle {
-    position: absolute;
-    bottom: 8px;
-    left: 19px;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    z-index: 1;
+  position: absolute;
+  bottom: 8px;
+  left: 19px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 1;
 }
 
 /* ===== 그래프 카드 ===== */
 .graphWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(540px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(540px, 1fr));
+  gap: 1.5rem;
 }
 
 .graphCard {
-    position: relative;
-    height: 433px;
-    background: #fff;
-    border-radius: var(--br-card);
-    padding: 1rem;
-    box-sizing: border-box;
-    border-top: 5px solid var(--border-steel);
+  position: relative;
+  height: 433px;
+  background: #fff;
+  border-radius: var(--br-card);
+  padding: 1rem;
+  box-sizing: border-box;
+  border-top: 5px solid var(--border-steel);
 }
+
 .graphCard > h3 {
-    margin: 0;
-    font-size: 1.125rem;
-    font-weight: 600;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
+
+/* DevAI.module.css 중 추가 */
+.blueBar {
+  background: var(--grad-blue); /* 이미 `--grad-blue` 변수가 선언돼 있으므로 재활용 */
+}
+
+.graphCard {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.logTableWrap {
+  max-height: 220px;
+  overflow: auto;
+  font-size: 13px;
+}
+
+.logTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.logTable th,
+.logTable td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.logTable tr:hover {
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.jsonModal {
+  background: #111;
+  color: #0f0;
+  padding: 20px;
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow: auto;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
 
 /* ───────── 반응형 ───────── */
 @media (max-width: 1024px) {
-    .devAi        { padding: 1.5rem; }
-    .graphWrapper { grid-template-columns: 1fr; }
+  .devAi {
+    padding: 1.5rem;
+  }
+
+  .graphWrapper {
+    grid-template-columns: 1fr;
+  }
 }
+
 @media (max-width: 768px) {
-    .devAi { padding: 1rem; }
+  .devAi {
+    padding: 1rem;
+  }
 }
+
 @media (max-width: 480px) {
-    .statValue { font-size: 1.75rem; }
+  .statValue {
+    font-size: 1.75rem;
+  }
 }

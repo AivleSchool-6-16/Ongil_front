@@ -1,138 +1,201 @@
 /* ───────── 전역 변수 ───────── */
 :root {
-    /* 고정 영역 크기 */
-    --sidebar-width: 250px;
-    --header-height: 130px;
+  /* 고정 영역 크기 */
+  --sidebar-width: 250px;
+  --header-height: 130px;
 
-    /* 스타일 변수 */
-    --br-card: 8px;
-    --bg-page: #f3f4f6;                 /* whitesmoke-300 */
-    --grad-blue: linear-gradient(90deg, #0bb2ff, #4f60ff);
-    --color-red: #d43a1b;
-    --grad-orange: linear-gradient(90deg, rgba(255, 90, 28, 0.8), #9844dd);
-    --color-yellow: #c3c703;
-    --border-steel: #4682b4;
+  /* 스타일 변수 */
+  --br-card: 8px;
+  --bg-page: #f3f4f6; /* whitesmoke-300 */
+  --grad-blue: linear-gradient(90deg, #0bb2ff, #4f60ff);
+  --color-red: #d43a1b;
+  --grad-orange: linear-gradient(90deg, rgba(255, 90, 28, 0.8), #9844dd);
+  --color-yellow: #c3c703;
+  --border-steel: #4682b4;
 }
 
 /* ───────── 레이아웃 ───────── */
 .devDashboard {
-    position: relative;
-    /* ← 고정 영역만큼 띄우기 */
-    margin-left:  var(--sidebar-width);
-    margin-top:   var(--header-height);
-    width:        calc(100% - var(--sidebar-width));
-    min-height:   calc(100vh - var(--header-height));
+  position: relative;
+  /* ← 고정 영역만큼 띄우기 */
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  width: calc(100% - var(--sidebar-width));
+  min-height: calc(100vh - var(--header-height));
 
-    background: var(--bg-page);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    box-sizing: border-box;
-    overflow-x: hidden;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* ===== 통계 카드 ===== */
 .statWrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .statCard {
-    position: relative;
-    height: 119px;                      /* 원본 높이 */
-    background: #fff;
-    border-radius: var(--br-card);
-    overflow: hidden;
-    padding: 1rem;
+  position: relative;
+  height: 119px; /* 원본 높이 */
+  background: #fff;
+  border-radius: var(--br-card);
+  overflow: hidden;
+  padding: 1rem;
 }
 
 /* 하단 컬러 스트립 */
 .statBar {
-    position: absolute;
-    bottom: 0;
-    left: 8px;
-    width: calc(100% - 16px);
-    height: 31px;
-    border-radius: 4px;
-    z-index: 0;
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: 31px;
+  border-radius: 4px;
+  z-index: 0;
 }
-.blueBar   { background: var(--grad-blue); }
-.redBar    { background: var(--color-red); }
-.orangeBar { background: var(--grad-orange); }
-.yellowBar { background: var(--color-yellow); }
+
+.blueBar {
+  background: var(--grad-blue);
+}
+
+.redBar {
+  background: var(--color-red);
+}
+
+.orangeBar {
+  background: var(--grad-orange);
+}
+
+.yellowBar {
+  background: var(--color-yellow);
+}
 
 /* 아이콘 */
 .statIcon {
-    position: absolute;
-    top: 18px;
-    right: 12px;
-    width: 46px;
-    height: 46px;
-    object-fit: contain;
+  position: absolute;
+  top: 18px;
+  right: 12px;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
 }
 
 /* 값, 단위, 제목 */
 .statValue {
-    position: absolute;
-    top: 10px;
-    left: 19px;
-    font: 700 2.25rem/1 "Inter", sans-serif;
+  position: absolute;
+  top: 10px;
+  left: 19px;
+  font: 700 2.25rem/1 "Inter", sans-serif;
 }
+
 .statUnit {
-    position: absolute;
-    top: 60px;
-    left: 19px;
-    font-size: 0.875rem;
-    color: #606468;
+  position: absolute;
+  top: 60px;
+  left: 19px;
+  font-size: 0.875rem;
+  color: #606468;
 }
+
 .statTitle {
-    position: absolute;
-    bottom: 8px;
-    left: 19px;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    z-index: 1;
+  position: absolute;
+  bottom: 8px;
+  left: 19px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 1;
 }
 
 /* ===== 그래프 카드 ===== */
 .graphWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(540px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(540px, 1fr));
+  gap: 1.5rem;
 }
 
 .graphCard {
-    position: relative;
-    height: 433px;
-    background: #fff;
-    border-radius: var(--br-card);
-    padding: 1rem;
-    box-sizing: border-box;
-    border-top: 5px solid var(--border-steel);
+  position: relative;
+  height: 433px;
+  background: #fff;
+  border-radius: var(--br-card);
+  padding: 1rem;
+  box-sizing: border-box;
+  border-top: 5px solid var(--border-steel);
 }
+
 .graphCard > h3 {
-    margin: 0;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #374151;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
 }
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  width: 400px;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+}
+
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.userTable th, .userTable td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #ececec;
+}
+
+.closeBtn {
+  margin-top: 12px;
+  padding: 6px 12px;
+}
+
 
 /* ───────── 반응형 ───────── */
 /* 태블릿 */
 @media (max-width: 1024px) {
-    .devDashboard { padding: 1.5rem; }
-    .graphWrapper { grid-template-columns: 1fr; }
+  .devDashboard {
+    padding: 1.5rem;
+  }
+
+  .graphWrapper {
+    grid-template-columns: 1fr;
+  }
 }
+
 /* 모바일 */
 @media (max-width: 768px) {
-    .devDashboard { padding: 1rem; }
+  .devDashboard {
+    padding: 1rem;
+  }
 }
+
 /* 초소형 모바일 */
 @media (max-width: 480px) {
-    .statValue { font-size: 1.75rem; }
+  .statValue {
+    font-size: 1.75rem;
+  }
 }

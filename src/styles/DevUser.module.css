@@ -1,89 +1,93 @@
 /* ───────── 공통 변수: DevDashboard 와 동일 ───────── */
 :root {
-    --sidebar-width: 250px;
-    --header-height: 130px;        /* ← 복원 */
+  --sidebar-width: 250px;
+  --header-height: 130px; /* ← 복원 */
 
-    --br-card: 8px;
-    --bg-page: #f5f5f5;
-    --color-steel: #4682b4;
+  --br-card: 8px;
+  --bg-page: #f5f5f5;
+  --color-steel: #4682b4;
 }
 
 /* ───────── 레이아웃 ───────── */
 .devUser {
-    margin-left: var(--sidebar-width);
-    margin-top : var(--header-height);   /* 헤더만큼 아래로 */
-    width      : calc(100% - var(--sidebar-width));
-    min-height : calc(100vh - var(--header-height)); /* 화면 끝까지 */
-    background : var(--bg-page);
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height); /* 헤더만큼 아래로 */
+  width: calc(100% - var(--sidebar-width));
+  min-height: calc(100vh - var(--header-height)); /* 화면 끝까지 */
+  background: var(--bg-page);
 
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    font-family: "Inter", sans-serif;
-    color: var(--color-steel);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  color: var(--color-steel);
 }
 
 /* 검색 입력창 */
 .searchInput {
-    flex: 1;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 /* 필터 셀렉트 */
 .filterSelect {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
 }
 
 /* 검색 바 내 정렬 */
 .searchbar {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    background: #eeeeee;
-    border-radius: var(--br-card);
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #eeeeee;
+  border-radius: var(--br-card);
+  flex-wrap: wrap;
 }
 
 
 .searchbarChild,
-.searchbarItem { display: none; }  /* Figma 잔여 요소 숨김 */
+.searchbarItem {
+  display: none;
+}
+
+/* Figma 잔여 요소 숨김 */
 
 .sort1Icon,
 .downArrow1Icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .searchUserFor {
-    font-size: 1rem;
-    color: #888888;
-    flex-grow: 1;                     /* 남는 공간을 채워 중앙정렬 느낌 */
+  font-size: 1rem;
+  color: #888888;
+  flex-grow: 1; /* 남는 공간을 채워 중앙정렬 느낌 */
 }
 
 /* ───────── 사용자 리스트 ───────── */
 .userlist {
-    width: 100%;
-    background: #3e3e3e;
-    border-radius: var(--br-card);
-    padding: 1rem;
-    color: #f0f0f0;
+  width: 100%;
+  background: #3e3e3e;
+  border-radius: var(--br-card);
+  padding: 1rem;
+  color: #f0f0f0;
 
-    /* 헤더·데이터 모두 가로로 넘칠 때 스크롤 */
-    overflow-x: auto;
-    white-space: nowrap;
+  /* 헤더·데이터 모두 가로로 넘칠 때 스크롤 */
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 /* 헤더 텍스트 공통 */
@@ -93,71 +97,119 @@
 .eMail,
 .name,
 .jurisdiction {
-    display: inline-block;
-    min-width: 140px;                 /* ⬆ ‘가로폭 넉넉’ 요구 반영 */
-    padding-right: 1rem;
-    font-weight: 600;
+  display: inline-block;
+  min-width: 140px; /* ⬆ ‘가로폭 넉넉’ 요구 반영 */
+  padding-right: 1rem;
+  font-weight: 600;
 }
 
 /* 예시용: 데이터 행 컨테이너 (추후 UserCard 등으로 대체) */
 .userRow {
-    margin-top: 0.75rem;
-    padding: 0.75rem 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 /* ───────── 테이블 래퍼 ───────── */
 .tableWrapper {
-    overflow-x: auto;
-    background: #f0f0f0;
-    border-radius: 8px;
+  overflow-x: auto;
+  background: #f0f0f0;
+  border-radius: 8px;
 }
 
 /* ───────── 테이블 자체 ───────── */
 .userTable {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px; /* 스크롤 유도 */
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* 스크롤 유도 */
 }
 
 .userTable th,
 .userTable td {
-    text-align: left;
-    padding: 0.75rem 1rem;
-    white-space: nowrap;         /* 줄바꿈 X */
-    border-bottom: 1px solid #ddd;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  white-space: nowrap; /* 줄바꿈 X */
+  border-bottom: 1px solid #ddd;
 }
 
 /* 헤더 */
 .userTable thead {
-    background-color: #333;
-    color: white;
+  background-color: #333;
+  color: white;
 }
 
 .userTable tbody tr:nth-child(even) {
-    background-color: #eaeaea;
+  background-color: #eaeaea;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+}
+
+.modalBtns {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.kick {
+  background: #ff4d4f;
+  color: #fff;
+}
+
 
 /* 반응형 조정 */
 @media (max-width: 768px) {
-    .userTable th,
-    .userTable td {
-        padding: 0.5rem;
-        font-size: 0.875rem;
-    }
+  .userTable th,
+  .userTable td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
 }
 
 
 /* ───────── 반응형 ───────── */
 @media (max-width: 1024px) {
-    .devUser   { padding: 1.5rem; }
-    .searchbar { flex-wrap: wrap; gap: 0.5rem; }
+  .devUser {
+    padding: 1.5rem;
+  }
+
+  .searchbar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
+
 @media (max-width: 768px) {
-    .devUser   { padding: 1rem; }
-    .permission,
-    .department,
-    .creatdt,
-    .eMail,
-    .name,
-    .jurisdiction { min-width: 110px; font-size: 0.875rem; }
+  .devUser {
+    padding: 1rem;
+  }
+
+  .permission,
+  .department,
+  .creatdt,
+  .eMail,
+  .name,
+  .jurisdiction {
+    min-width: 110px;
+    font-size: 0.875rem;
+  }
 }
