@@ -142,16 +142,20 @@ const SideNavigation = () => {
     navigateTo(item.page);
   };
   const handleLogout = async () => {
-    // 먼저 로컬에서 세션 제거
+    // 1) 토큰·역할 정보 제거
     ['access_token', 'refresh_token', 'is_admin'].forEach(
-        localStorage.removeItem);
-    navigateTo('Login'); // 바로 로그인 화면 이동
+        key => localStorage.removeItem(key)   // ✔️ this 유지
+    );
 
-    // 이후 API 호출 (실패해도 사용자 입장에선 무관)
+    // 2) 라우팅 (토큰 삭제가 끝난 뒤 바로 이동)
+    navigateTo('Login');     // 또는 navigate('/'); 등 실제 로그인 경로
+
+    // 3) 서버에도 로그아웃 알리기
     try {
-      await logout(localStorage.getItem('access_token'));
-    } catch (error) {
-      console.warn('서버 로그아웃 실패 (무시 가능):', error.message);
+      const accessToken = localStorage.getItem('access_token_backup'); // → 삭제 전에 따로 저장해둔 값
+      await logout(accessToken);
+    } catch (err) {
+      console.warn('서버 로그아웃 실패 (무시 가능):', err.message);
     }
   };
 
