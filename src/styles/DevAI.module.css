@@ -1,3 +1,7 @@
+/* ================================================================
+ * DevAI.module.css – 크기 조정 & 반응형 개선
+ * ================================================================*/
+
 /* ───────── 전역 변수 ───────── */
 :root {
   /* 고정 영역 크기 */
@@ -15,12 +19,10 @@
 
 /* ───────── 기본 레이아웃 ───────── */
 .devAi {
-  /* 사이드바 + 헤더 공간 비움 */
   margin-left: var(--sidebar-width);
   margin-top: var(--header-height);
   width: calc(100% - var(--sidebar-width));
   min-height: calc(100vh - var(--header-height));
-
   background: var(--bg-page);
   display: flex;
   flex-direction: column;
@@ -32,42 +34,35 @@
   color: #374151;
 }
 
-/* ───────── 타이틀 ───────── */
-.pageTitle {
-  margin: 0;
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
 /* ===== 통계 카드 ===== */
 .statWrapper {
   display: grid;
-  /* ① 각 칸이 0 ~ 220 px 사이에서만 늘어나도록(max 220) */
-  grid-template-columns: repeat(auto-fill, minmax(0, 220px));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 유연 폭 */
+  gap: 1.25rem;
 }
 
 .statCard {
   position: relative;
-  height: 119px;
+  height: 140px; /* 카드 높이 */
   background: #fff;
   border-radius: var(--br-card);
   overflow: hidden;
   padding: 1rem;
-
-  /* ② 안전장치 – 카드 자체에도 최대폭 고정 */
-  max-width: 220px;
 }
 
-
+/* 하단 스트립 */
 .statBar {
   position: absolute;
   bottom: 0;
   left: 8px;
   width: calc(100% - 16px);
-  height: 31px;
+  height: 32px;
   border-radius: 4px;
   z-index: 0;
+}
+
+.blueBar {
+  background: var(--grad-blue);
 }
 
 .orangeBar {
@@ -78,6 +73,7 @@
   background: var(--color-red);
 }
 
+/* 아이콘 · 값 · 단위 · 제목 */
 .statIcon {
   position: absolute;
   top: 18px;
@@ -117,13 +113,13 @@
 /* ===== 그래프 카드 ===== */
 .graphWrapper {
   display: grid;
-  grid-template-columns: repeat(2, minmax(540px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); /* 유연 폭 */
   gap: 1.5rem;
 }
 
 .graphCard {
   position: relative;
-  height: 433px;
+  min-height: 380px; /* 높이 축소 & 유연 */
   background: #fff;
   border-radius: var(--br-card);
   padding: 1rem;
@@ -132,25 +128,14 @@
 }
 
 .graphCard > h3 {
-  margin: 0;
+  margin: 0 0 8px 0;
   font-size: 1.125rem;
   font-weight: 600;
 }
 
-/* DevAI.module.css 중 추가 */
-.blueBar {
-  background: var(--grad-blue); /* 이미 `--grad-blue` 변수가 선언돼 있으므로 재활용 */
-}
-
-.graphCard {
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-}
-
-.logTableWrap {
-  max-height: 220px;
+/* ===== 테이블 & 스크롤 ===== */
+.tableScroll {
+  max-height: 240px;
   overflow: auto;
   font-size: 13px;
 }
@@ -164,34 +149,12 @@
 .logTable td {
   padding: 4px 6px;
   border-bottom: 1px solid #eee;
+  text-align: center;
 }
 
 .logTable tr:hover {
   background: #fafafa;
-  cursor: pointer;
 }
-
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.jsonModal {
-  background: #111;
-  color: #0f0;
-  padding: 20px;
-  max-width: 80vw;
-  max-height: 80vh;
-  overflow: auto;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
 
 /* ───────── 반응형 ───────── */
 @media (max-width: 1024px) {
@@ -207,6 +170,10 @@
 @media (max-width: 768px) {
   .devAi {
     padding: 1rem;
+  }
+
+  .statCard {
+    height: 130px;
   }
 }
 

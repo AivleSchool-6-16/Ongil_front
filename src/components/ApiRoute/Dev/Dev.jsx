@@ -41,17 +41,14 @@ export const patchUserPermission = (email, newPermission) =>
 export const kickUser = email =>
     devApi.delete(`/users/${email}`);
 
-export const fetchDevAiStats = () =>
-    devApi.get("/status/ai-monitoring").then(res => res.data);    // 🔸
+/* ───────── 신규 helpers : AI 모니터링 ───────── */
+export const fetchTodayStats = () =>
+    devApi.get("/ai/today-stats").then(res => res.data);
 
-export const fetchAiLogs = (limit = 10) =>
-    devApi.get(`/ai/logs?limit=${limit}`).then(res => res.data);   // 🔸
+export const fetchRecentPredictLogs = (limit = 30) =>
+    devApi.get("/ai/predicts/recent", {params: {limit}}).then(
+        res => res.data.logs);
 
-export const fetchRecentRecommCnt = (h = 24) =>
-    devApi.get(`/status/recent-recommend?hours=${h}`).then(res => res.data); // 🔸
-
-export const fetchRecLogs = () =>
-    axios.get(`${BASE}/roads/recommendations/log`, {
-      headers: {token: localStorage.getItem("access_token")}
-    }).then(res => res.data);                                      // 🔸
+export const fetchRegionLatency = () =>
+    devApi.get("/ai/latency/region-avg").then(res => res.data.region_latency);
 
