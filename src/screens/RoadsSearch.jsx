@@ -1,7 +1,7 @@
 import styles from '../styles/RoadsSearch.module.css';
 import {useState, useEffect} from 'react';
 import useNavigations from "../components/Navigation/Navigations.jsx";
-import locationData from '../data/locations_nested.json';
+import locationData from '../data/location_seoul.json';
 import LoadingPage from "../components/spinner/LoadingPage.jsx";
 import {getDistrict, recommendRoads} from "../components/ApiRoute/roads.jsx";
 import {Tooltip} from "react-tooltip";
